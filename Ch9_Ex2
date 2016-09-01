@@ -13,7 +13,7 @@
 
 using namespace std;
 
-const int NO_OF_STUDENTS = 20;//establishes array of 20 components (for number of students)
+const int NO_OR_STUDENTS = 20;//establishes array of 20 components (for number of students)
 
 struct studentType//defines the struct variable as studentType and declares the struct variables
 {
@@ -32,7 +32,7 @@ int main()
 {
 	ifstream inData;
 	ofstream outData;
-	studentType studentList[NO_OF_STUDENTS];
+	studentType studentList[NO_OR_STUDENTS];
 
 	inData.open("Ch9_Ex2Data.txt");//open the input file & if there's not an input file then the program terminates
 	if (!inData)
@@ -47,18 +47,19 @@ int main()
 	{
 		cout << "Cannot open the output file. Program terminates!"
 			<< endl;
+		system("pause");
 		return 1;
 	}
 	/***function call***/
-	getData(inData, studentList, NO_OF_STUDENTS);
-	calculateGrade(studentList, NO_OF_STUDENTS);
-	printResult(outData, studentList, NO_OF_STUDENTS);
-
+	getData(inData, studentList, NO_OR_STUDENTS);
+	calculateGrade(studentList, NO_OR_STUDENTS);
+	printResult(outData, studentList, NO_OR_STUDENTS);
+	system("pause");
 	return 0;
 }
 void getData(ifstream& inFile, studentType sList[], int listSize)
 {
-	for (int i = 0; i < listSize; i++) //puts the input into an array
+	for (int i = 0; i < listSize; i++) 
 		inFile >> sList[i].studentFName >> sList[i].studentLName
 		>> sList[i].testScore;
 }
@@ -93,10 +94,9 @@ void calculateGrade(studentType sList[], int listSize)
 	}
 }
 
-int highestScore(const studentType sList[], int listSize)
+int highestScore(const studentType sList[], int listSize)//function to find the highest test score
 {
 	int hScore = sList[0].testScore;
-
 	for (int i = 1; i < listSize; i++)
 		if (hScore < sList[i].testScore)
 			hScore = sList[i].testScore;
@@ -120,9 +120,11 @@ void printResult(ofstream& outFile, const studentType sList[],
 		<< right << " " << setw(5) << sList[i].testScore
 		<< setw(6) << " " << sList[i].grade << endl;
 
+	outFile << endl << "Highest Test Score: " << maxScore << endl;
+	outFile << "Students having the highest test score:" << endl;
+
 	for (i = 0; i < listSize; i++)
 		if (sList[i].testScore == maxScore)
 			outFile << sList[i].studentLName + ", " + sList[i].studentFName
 			<< endl;
 }
-
